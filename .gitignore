@@ -3,3 +3,6 @@ Pipfile*
 
 # emacs
 *~
+
+# data files
+data_dir

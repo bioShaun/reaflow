@@ -6,3 +6,7 @@ Pipfile*
 
 # data files
 data_dir
+
+# test sh
+launch.sh
+*.log.*

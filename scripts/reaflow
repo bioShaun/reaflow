@@ -1,0 +1,52 @@
+#! /usr/bin/env python3
+import configparser
+from datetime import datetime, timedelta
+import airflow
+from airflow.operators.python_operator import PythonOperator
+from airflow.models import DAG
+#from reaflow.utils.config import base_func
+
+CFG = configparser.ConfigParser()
+
+
+def load_rea_config(ds, **kwargs):
+    '''Load project config file'''
+    CFG.read(kwargs['dag_run'].conf['cfg'])
+    print(CFG['gene_type'])
+    return CFG
+
+
+default_args = {
+    'owner': 'airflow',
+    'depends_on_past': False,
+    'start_date': datetime(2018, 8, 24),
+    'email': ['guilixuan@gmail.com'],
+    'email_on_failure': False,
+    'email_on_retry': False,
+    'retries': 1,
+    'retry_delay': timedelta(minutes=5),
+}
+
+
+dag = DAG(
+    dag_id='rnaseq_exp_analysis_workflow',
+    default_args=default_args,
+    schedule_interval=None
+)
+
+
+load_config = PythonOperator(
+    task_id='load_rea_config',
+    provide_context=True,
+    python_callable=load_rea_config,
+    dag=dag,
+)
+
+
+# exp_filter = PythonOperator(
+#     task_id='exp_filter',
+#     provide_context=True,
+#     python_callable=base_func['base_expression_filter'],
+#     dag=dag,
+
+#)

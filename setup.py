@@ -3,11 +3,13 @@ from setuptools import setup, find_packages
 
 version = '0.1dev'
 
-print '''
+version_inf = '''
 --------------------------------
 Installing reaflow version {v}
 --------------------------------
 '''.format(v=version)
+
+print(version_inf)
 
 
 setup(
@@ -23,17 +25,18 @@ setup(
         'pandas',
         'click',
     ],
-    # scripts=['scripts/reaflow'],
     entry_points={
         'ExpBase': [
-            "base_expression_filter=reaflow.expression.base:expression_filter",
+            "expression_filter=reaflow.expression.base:expression_filter",
         ]
     }
 
 )
 
-print'''
+exit_inf = '''
 --------------------------------
 reaflow installation complete!
 --------------------------------
 '''
+
+print(exit_inf)

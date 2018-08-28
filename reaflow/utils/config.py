@@ -34,7 +34,7 @@ class FlowParams:
                     {key: self.cfg_obj[section][key]})
         return self._cfg_dict
 
-    def params(self, func):
+    def params(self, func, label=None):
         param_dict = {}
         sig = inspect.signature(func)
         for each in sig.parameters:
@@ -45,6 +45,8 @@ class FlowParams:
                     raise KeyError(f'Can not find [{each}] in configfile.')
                 else:
                     param_dict.update({each: sig.parameters[each].default})
+        if label is not None:
+            param_dict.update({'_func_label': label})
         return param_dict
 
     @classmethod
@@ -52,3 +54,9 @@ class FlowParams:
         cfg_obj = ConfigParser(interpolation=ExtendedInterpolation())
         cfg_obj.read(cfg_file)
         return cls(cfg_obj)
+
+
+def FlowFuncs(**kwargs):
+    params_dict = kwargs['params'].copy()
+    func_name = params_dict.pop('_func_label')
+    return base_func[func_name](**params_dict)

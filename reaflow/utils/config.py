@@ -5,7 +5,7 @@
 
 import inspect
 import pkg_resources
-import configparser
+from configparser import ConfigParser, ExtendedInterpolation
 
 
 # load expression base functions
@@ -49,6 +49,6 @@ class FlowParams:
 
     @classmethod
     def fromfile(cls, cfg_file):
-        cfg_obj = configparser.ExtendedInterpolation()
+        cfg_obj = ConfigParser(interpolation=ExtendedInterpolation())
         cfg_obj.read(cfg_file)
         return cls(cfg_obj)

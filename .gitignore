@@ -2,6 +2,7 @@
 Pipfile*
 *.egg-info
 *pyc
+*flymake.py
 
 # emacs
 *~

@@ -1,5 +1,6 @@
 import pandas as pd
 import fire
+from reaflow.utils.tools import is_valid_file
 
 
 def expression_filter(all_tpm, exp_cutoff, exp_tpm=None, filter_method='max'):

@@ -6,6 +6,7 @@
 import inspect
 import pkg_resources
 from configparser import ConfigParser, ExtendedInterpolation
+from . import tools
 
 
 # load expression base functions
@@ -59,4 +60,8 @@ class FlowParams:
 def FlowFuncs(**kwargs):
     params_dict = kwargs['params'].copy()
     func_name = params_dict.pop('_func_label')
-    return base_func[func_name](**params_dict)
+    func = base_func[func_name]
+    if tools.check_in_out(func, params_dict):
+        return f'{func_name} is done.'
+    else:
+        return func(**params_dict)
